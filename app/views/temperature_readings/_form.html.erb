@@ -1,0 +1,21 @@
+<%= form_for(@temperature_reading) do |f| %>
+  <% if @temperature_reading.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@temperature_reading.errors.count, "error") %> prohibited this temperature_reading from being saved:</h2>
+
+      <ul>
+      <% @temperature_reading.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :CelciusReading %><br>
+    <%= f.text_field :CelciusReading %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
