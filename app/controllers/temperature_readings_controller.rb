@@ -1,5 +1,6 @@
 class TemperatureReadingsController < ApplicationController
   before_action :set_temperature_reading, only: [:show, :edit, :update, :destroy]
+  protect_from_forgery :except => [:create]
 
   # GET /temperature_readings
   # GET /temperature_readings.json
