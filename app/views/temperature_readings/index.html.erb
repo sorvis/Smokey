@@ -3,7 +3,8 @@
 <table>
   <thead>
     <tr>
-      <th>Celciusreading</th>
+      <th>Celcius</th>
+      <th>Add Timestamp</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -11,7 +12,8 @@
   <tbody>
     <% @temperature_readings.each do |temperature_reading| %>
       <tr>
-        <td><%= temperature_reading.CelciusReading %></td>
+        <td><%= temperature_reading.CelciusReading %> <sup>o</sup>C</td>
+        <td><%= temperature_reading.created_at.in_time_zone.to_s(:time_and_date) %></td>
         <td><%= link_to 'Show', temperature_reading %></td>
         <td><%= link_to 'Edit', edit_temperature_reading_path(temperature_reading) %></td>
         <td><%= link_to 'Destroy', temperature_reading, method: :delete, data: { confirm: 'Are you sure?' } %></td>
