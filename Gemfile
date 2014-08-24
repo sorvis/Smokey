@@ -41,14 +41,15 @@ gem 'spring',        group: :development
 gem 'rails_12factor', group: :production
 
 group :development, :test do
-    gem 'rspec-rails', '~> 3.0.0'
+    gem 'rspec-rails'
     gem 'factory_girl_rails'
 end
 
 group :test do
-  gem 'faker'
-  gem 'capybara'
-  gem 'guard-rspec'
+  gem 'debugger'
+  #gem 'faker'
+  #gem 'capybara'
+  #gem 'guard-rspec'
   #gem 'launch'
 end
 
