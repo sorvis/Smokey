@@ -11,3 +11,18 @@ describe 'Given a temperature of 38.2 celcius' do
   end
 end
 
+describe 'Given a nil temperature' do
+  before(:each) do
+    @temperature = TemperatureReading.new :CelciusReading => nil
+  end
+
+  it 'should not blow up on fahrenheit' do
+    expect(@temperature.fahrenheit).to eq(nil)
+  end
+
+  it 'should throw validation error on save' do
+    expect{@temperature.save!}.to raise_error
+  end
+end
+
+
