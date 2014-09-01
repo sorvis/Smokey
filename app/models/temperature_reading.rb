@@ -6,4 +6,8 @@ class TemperatureReading < ActiveRecord::Base
     9.0 / 5.0 * self.CelciusReading + 32
   end
 
+  def self.latest
+    TemperatureReading.last 
+  end
+
 end

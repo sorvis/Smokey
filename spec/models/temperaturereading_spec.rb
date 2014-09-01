@@ -25,4 +25,15 @@ describe 'Given a nil temperature' do
   end
 end
 
+describe 'Given an older and newer reading latest' do
+  before(:each) do
+    @newer = TemperatureReading.create! :created_at => DateTime.now.noon, :CelciusReading => 13
+    @older = TemperatureReading.create! :created_at => DateTime.now.midnight, :CelciusReading => 44
+  end
+
+  it 'should should return newer' do
+    expect(TemperatureReading.latest).to eq(@older)
+  end
+end
+
 
