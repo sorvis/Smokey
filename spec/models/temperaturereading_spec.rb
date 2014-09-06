@@ -3,11 +3,16 @@ require 'rails_helper'
 
 describe 'Given a temperature of 38.2 celcius' do
   before(:each) do
-    @temperature = TemperatureReading.new :CelciusReading => 38.2
+    @temperature = TemperatureReading.create :CelciusReading => 38.2
+    @fahrenheit = 100.76
   end
 
   it 'should have fahrenheit of 100.76' do 
-    expect(@temperature.fahrenheit).to eq 100.76
+    expect(@temperature.fahrenheit).to eq @fahrenheit
+  end
+
+  it 'should return summary in fahrenheit' do
+    TemperatureReading.get_summary.first.map{|k,v|v}.first == @fahrenheit
   end
 end
 

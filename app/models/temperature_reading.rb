@@ -3,7 +3,11 @@ class TemperatureReading < ActiveRecord::Base
 
   def fahrenheit
     return nil if self.CelciusReading.nil?
-    9.0 / 5.0 * self.CelciusReading + 32
+    TemperatureReading.toFahrenheit(self.CelciusReading)
+  end
+
+  def self.toFahrenheit(celcius)
+    9.0 / 5.0 * celcius + 32
   end
 
   def self.latest
@@ -11,7 +15,8 @@ class TemperatureReading < ActiveRecord::Base
   end
 
   def self.get_summary
-    TemperatureReading.group_by_hour(:created_at).average(:CelciusReading)
+    readings = TemperatureReading.group_by_hour(:created_at).average(:CelciusReading)
+    readings.update(readings) {|time, celcius| TemperatureReading.toFahrenheit(celcius)} 
   end
 
 end
