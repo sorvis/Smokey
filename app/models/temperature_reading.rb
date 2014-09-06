@@ -10,4 +10,8 @@ class TemperatureReading < ActiveRecord::Base
     TemperatureReading.last 
   end
 
+  def self.get_summary
+    TemperatureReading.group_by_hour(:created_at).average(:CelciusReading)
+  end
+
 end

@@ -2,3 +2,6 @@
 <p>Current reading: <%= @latest.fahrenheit =%><sup>o</sup>F
 <%= @latest.created_at.in_time_zone.to_s(:time_and_date) %>
 </p>
+<p>
+<%= line_chart @summary_data %>
+</p>
