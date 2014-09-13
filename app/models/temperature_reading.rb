@@ -14,8 +14,14 @@ class TemperatureReading < ActiveRecord::Base
     TemperatureReading.last 
   end
 
-  def self.get_summary
-    readings = TemperatureReading.group_by_hour(:created_at).average(:CelciusReading)
+  def self.get_summary(range = :all)
+    case range
+    when :today
+      readings = TemperatureReading.group_by_hour(:created_at, 
+        range: Date.today.beginning_of_day..Date.today.end_of_day).average(:CelciusReading)
+    when :all
+      readings = TemperatureReading.group_by_hour(:created_at).average(:CelciusReading)
+    end
     readings.update(readings) {|time, celcius| TemperatureReading.toFahrenheit(celcius)} 
   end
 
