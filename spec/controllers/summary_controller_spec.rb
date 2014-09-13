@@ -20,15 +20,21 @@ RSpec.describe SummaryController, :type => :controller do
       TemperatureReading.should_receive(:latest)  
       get :index
     end
+  end
 
-    it 'should set @summary_data' do
-      get :index
-      assigns(:summary_data).should_not be_nil
+  describe "GET data" do
+    before(:each) do
+      @data = TemperatureReading.create! :CelciusReading => 4
+    end
+
+    it 'should set summary_data' do
+      get :data
+      response.body.should_not be_nil 
     end
 
     it 'should call TemeratureReading.get_summary' do
       TemperatureReading.should_receive(:get_summary)
-      get :index
+      get :data
     end
   end
 end

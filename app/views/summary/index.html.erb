@@ -3,5 +3,5 @@
 <%= @latest.created_at.in_time_zone.to_s(:time_and_date) %>
 </p>
 <p>
-<%= line_chart @summary_data, id: "Temperature-Chart" %>
+<%= line_chart summary_data_path, id: "Temperature-Chart" %>
 </p>

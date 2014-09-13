@@ -1,6 +1,11 @@
 class SummaryController < ApplicationController
+
   def index
     @latest = TemperatureReading.latest
-    @summary_data = TemperatureReading.get_summary
   end
+
+  def data
+    render :json => TemperatureReading.get_summary
+  end
+
 end
