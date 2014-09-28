@@ -25,4 +25,13 @@ class TemperatureReading < ActiveRecord::Base
     readings.update(readings) {|time, celcius| TemperatureReading.toFahrenheit(celcius)} 
   end
 
+  def self.archive!
+    averaged = TemperatureReading.get_summary.
+      reject{|time| time.to_date == Date.today}
+    TemperatureReading.destroy_all{ created_at < DateTime.
+                              today_beginning_of_day}
+    averaged.each{|time, celcius| TemperatureReading.
+                  create! :created_at => time, :CelciusReading => celcius}
+  end
+
 end
