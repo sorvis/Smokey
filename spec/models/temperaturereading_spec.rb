@@ -70,8 +70,7 @@ describe 'Given an older and newer reading latest' do
     end
 
     it 'should leave todays intact' do
-      expect{ TemperatureReading.archive! }.not_to change {TemperatureReading.all_today}.
-        from(TemperatureReading.all_today)
+      expect{ TemperatureReading.archive! }.not_to change {TemperatureReading.all_today}
     end
 
     it 'should archive yesterdays data into 1 record' do
