@@ -26,12 +26,20 @@ class TemperatureReading < ActiveRecord::Base
   end
 
   def self.archive!
-    averaged = TemperatureReading.get_summary.
-      reject{|time| time.to_date == Date.today}
-    TemperatureReading.destroy_all{ created_at < DateTime.
-                              today_beginning_of_day}
-    averaged.each{|time, celcius| TemperatureReading.
-                  create! :created_at => time, :CelciusReading => celcius}
+    not_archived = TemperatureReading.all_before_today.where(:archived => false)
+    grouped_by_day = not_archived.group_by{|r| r.created_at.to_date}
+    grouped_by_day.each{|t, items| TemperatureReading.create! :created_at => t,
+                        :archived => true, :CelciusReading => (items.
+                        inject(0){|total, r| total + r.CelciusReading} / items.count)}
+    TemperatureReading.destroy(not_archived.pluck :id)
+  end
+
+  def self.all_today
+    TemperatureReading.where(:created_at => (Date.today.beginning_of_day..Date.today.end_of_day))
+  end
+
+  def self.all_before_today
+    TemperatureReading.where.not(:created_at => (Date.today.beginning_of_day..Date.today.end_of_day))
   end
 
 end
