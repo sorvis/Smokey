@@ -27,8 +27,8 @@ class TemperatureReading < ActiveRecord::Base
 
   def self.archive!
     not_archived = TemperatureReading.all_before_today.where(:archived => false)
-    grouped_by_day = not_archived.group_by{|r| r.created_at.to_date}
-    grouped_by_day.each{|t, items| TemperatureReading.create! :created_at => t,
+    grouped_by_hour = not_archived.group_by{|r| r.created_at.beginning_of_hour}
+    grouped_by_hour.each{|t, items| TemperatureReading.create! :created_at => t,
                         :archived => true, :CelciusReading => (items.
                         inject(0){|total, r| total + r.CelciusReading} / items.count)}
     TemperatureReading.destroy(not_archived.pluck :id)

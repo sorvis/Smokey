@@ -61,7 +61,6 @@ describe 'Given an older and newer reading latest' do
       @today = TemperatureReading.create! :created_at => DateTime.now.noon, :CelciusReading => Random.rand()
       @yesterday = TemperatureReading.create! :created_at => Date.yesterday, :CelciusReading => Random.rand()
       @yesturday_noon = TemperatureReading.create :created_at => DateTime.yesterday.noon, :CelciusReading => Random.rand()
-      TemperatureReading.create :created_at => DateTime.yesterday.noon, :CelciusReading => Random.rand()
     end
 
     it 'should mark yesterdays data as being archived' do
@@ -73,11 +72,12 @@ describe 'Given an older and newer reading latest' do
       expect{ TemperatureReading.archive! }.not_to change {TemperatureReading.all_today}
     end
 
-    it 'should archive yesterdays data into 1 record' do
+    it 'should archive yesterdays data into 24 records' do
+      25.times{|i| TemperatureReading.create :created_at => DateTime.yesterday.beginning_of_day + (i-1).hour, :CelciusReading => Random.rand()}
       TemperatureReading.archive!
       TemperatureReading.where(created_at: (DateTime.yesterday.
                                beginning_of_day)..DateTime.
-                               yesterday.end_of_day).count.should be 1
+                               yesterday.end_of_day).count.should be 24
     end
   end
 end
