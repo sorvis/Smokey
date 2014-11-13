@@ -5,7 +5,7 @@ class SummaryController < ApplicationController
   end
 
   def data
-    render :json => TemperatureReading.get_summary(:today)
+    render :json => TemperatureReading.get_summary
   end
 
 end
