@@ -40,7 +40,7 @@ describe 'Given an older and newer reading latest' do
     expect(TemperatureReading.latest).to eq(@older)
   end
 
-  describe 'Given data in every week for the past month get_summary' do
+  describe 'Given data in every week for the past month get_summary :today' do
     before(:each) do
       TemperatureReading.delete_all
       @today = TemperatureReading.create! :created_at => DateTime.now.noon, :CelciusReading => Random.rand()
@@ -52,6 +52,17 @@ describe 'Given an older and newer reading latest' do
     it 'should return only today for today' do
       @result = TemperatureReading.get_summary(:today)
       @result.each{|key, value| key.to_date.should eq Date.today}
+    end
+
+    it 'should contain todays temperature' do
+      @result = TemperatureReading.get_summary(:today)
+      expect(@result.values).to include(@today.fahrenheit)
+    end
+
+    it 'should not contain more data then there exists for today' do
+      @result = TemperatureReading.get_summary(:today)
+      numberToday = TemperatureReading.where("created_at >= ?", Time.zone.now.beginning_of_day).count
+      expect(@result.count).to equal(numberToday)
     end
   end
 
