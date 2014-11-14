@@ -66,6 +66,18 @@ describe 'Given an older and newer reading latest' do
     end
   end
 
+  describe 'Given no data get_summary should return nil or empty' do
+    before(:each) do
+      TemperatureReading.delete_all
+    end
+    it 'should work for :all' do
+      TemperatureReading.get_summary(:all)
+    end
+    it 'should work for :today' do
+      TemperatureReading.get_summary(:today)
+    end
+  end
+
   describe 'Given data before today and today archive' do
     before(:each) do
       TemperatureReading.delete_all
