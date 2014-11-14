@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+ruby "2.1.2"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.5'
@@ -51,7 +52,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'debugger'
+  gem 'byebug'
   #gem 'faker'
   #gem 'capybara'
   #gem 'guard-rspec'
