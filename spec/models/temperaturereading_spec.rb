@@ -66,6 +66,20 @@ describe 'Given an older and newer reading latest' do
     end
   end
 
+  describe 'Given data 25, 23, and 5 hours ago get_summary :hour' do
+    before(:each) do
+      TemperatureReading.delete_all
+      @fiveHours = TemperatureReading.create! :created_at => (DateTime.now - 5.hours), :CelciusReading => Random.rand()
+      @twentyThreeHours = TemperatureReading.create! :created_at => (DateTime.now - 23.hours), :CelciusReading => Random.rand() 
+      @twentyFiveHours = TemperatureReading.create! :created_at => (DateTime.now - 25.hours), :CelciusReading => Random.rand() 
+    end
+
+    it 'should return only 2 records' do
+      @result = TemperatureReading.get_summary(:hour24)
+      expect(@result.count).to equal(2)
+    end
+  end
+
   describe 'Given no data get_summary should return nil or empty' do
     before(:each) do
       TemperatureReading.delete_all
