@@ -7,12 +7,12 @@ RSpec.describe SummaryController, :type => :controller do
       TemperatureReading.create! :CelciusReading => 4
     end
     it "returns http success" do
-      get :index
+      get :index, :dataRange => "all"
       expect(response).to be_success
     end
 
     it 'should set @latest' do
-      get :index
+      get :index, :dataRange => "all"
       assigns(:latest).should_not be_nil
     end
 
