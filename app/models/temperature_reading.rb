@@ -21,8 +21,22 @@ class TemperatureReading < ActiveRecord::Base
       readings = readings.map{|item| [item.created_at, item.CelciusReading]}.to_h
     when :all 
       readings = TemperatureReading.group_by_hour(:created_at).average(:CelciusReading)
+    else
+      if !!(range =~ /^hour(\d*)$/)
+        readings = TemperatureReading.get_summary_hour(range) 
+      else
+        raise ArgumentError, 'Range of ' + range.to_s + ' is unknown'
+      end
     end
+    readings ||= {}
     readings.update(readings) {|time, celcius| TemperatureReading.toFahrenheit(celcius)} 
+  end
+
+  def self.get_summary_hour(range)
+    time = range.to_s.scan(/\d/).join.to_i
+    readings = TemperatureReading.where("created_at >= ?", Time.zone.now - time.hours)
+    readings = readings.map{|item| [item.created_at, item.CelciusReading]}.to_h
+    readings 
   end
 
   def self.archive!
