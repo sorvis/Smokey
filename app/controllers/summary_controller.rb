@@ -6,7 +6,9 @@ class SummaryController < ApplicationController
   end
 
   def latest
-    render :json => TemperatureReading.latest
+    latestReading = TemperatureReading.latest
+    json = {:created_at => latestReading.created_at, :fahrenheit => latestReading.fahrenheit}
+    render :json => json
   end
 
   def data
