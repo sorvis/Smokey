@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get 'summary/index'
   get 'summary/data'
+  get 'summary/latest'
 
   resources :temperature_readings
 

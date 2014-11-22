@@ -6,30 +6,27 @@ RSpec.describe SummaryController, :type => :controller do
     before(:each) do
       TemperatureReading.create! :CelciusReading => 4
     end
+
     it "returns http success" do
       get :index, :dataRange => "all"
       expect(response).to be_success
     end
+  end
 
-    it 'should set @latest' do
-      get :index, :dataRange => "all"
-      assigns(:latest).should_not be_nil
+  describe "GET latest" do
+    before(:each) do
+      TemperatureReading.create! :CelciusReading => 4
     end
 
     it 'should call TemperatureReading.latest' do
       TemperatureReading.should_receive(:latest)  
-      get :index
+      get :latest
     end
   end
 
   describe "GET data" do
     before(:each) do
       @data = TemperatureReading.create! :CelciusReading => 4
-    end
-
-    it 'should set summary_data' do
-      get :data
-      response.body.should_not be_nil 
     end
 
     it 'should call TemeratureReading.get_summary' do

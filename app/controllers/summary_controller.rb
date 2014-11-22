@@ -3,8 +3,10 @@ class SummaryController < ApplicationController
   def index
     @dataRange = params[:dataRange]
     redirect_to(:action => 'index', :dataRange => 'today') unless @dataRange
+  end
 
-    @latest = TemperatureReading.latest
+  def latest
+    render :json => TemperatureReading.latest
   end
 
   def data
