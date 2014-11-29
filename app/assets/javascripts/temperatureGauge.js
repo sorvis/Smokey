@@ -86,10 +86,10 @@ $(function () {
   },
 
   series: [{
-    name: 'Speed',
-    data: [80],
+    name: 'Temperature',
+    data: [0],
     tooltip: {
-      valueSuffix: ' km/h'
+      valueSuffix: ' F'
     }
   }]
 
@@ -97,22 +97,27 @@ $(function () {
   // Add some life
   function (chart) {
     if (!chart.renderer.forExport) {
+      refreshChart(chart);
       setInterval(function () {
-        var point = chart.series[0].points[0];
-
-        $.ajax({
-          type: "GET",
-          url: "<%= summary_latest_path %>" ,
-          dataType: "JSON",
-          success: function(data) {
-            newVal = data.fahrenheit;
-            point.update(Number(newVal));
-            chart.setTitle({text: "Temperature -- " + data.created_at});
-          }
-        });
-      }, 3000);
+        refreshChart(chart);
+      }, 30000);
     }
   });
 });
 
+function refreshChart(chart){
+  var point = chart.series[0].points[0];
+  getLatest(function (data){
+    point.update(Number(data.fahrenheit));
+    chart.setTitle({text: "Temperature -- " + data.created_at});
+  });
+}
 
+function getLatest(process){
+  $.ajax({
+    type: "GET",
+    url: "/summary/latest",
+    dataType: "JSON",
+    success: process
+  });
+}
