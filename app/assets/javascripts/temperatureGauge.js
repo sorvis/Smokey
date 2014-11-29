@@ -109,8 +109,14 @@ function refreshChart(chart){
   var point = chart.series[0].points[0];
   getLatest(function (data){
     point.update(Number(data.fahrenheit));
-    chart.setTitle({text: "Temperature -- " + data.created_at});
+    chart.setTitle({text: "Temperature -- " + getFormatedDateTime(data.created_at)});
   });
+}
+
+function getFormatedDateTime(dateTimeString){
+  date = new Date(dateTimeString);
+  dateString = date.toLocaleString();
+  return dateString;
 }
 
 function getLatest(process){
