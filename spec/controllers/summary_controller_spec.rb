@@ -15,11 +15,11 @@ RSpec.describe SummaryController, :type => :controller do
 
   describe "GET latest" do
     before(:each) do
-      TemperatureReading.create! :CelciusReading => 4
+      @reading = TemperatureReading.create! :CelciusReading => 4
     end
 
     it 'should call TemperatureReading.latest' do
-      TemperatureReading.should_receive(:latest)  
+      TemperatureReading.should_receive(:latest){@reading}  
       get :latest
     end
   end
