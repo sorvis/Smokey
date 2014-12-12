@@ -50,10 +50,10 @@ group :development, :test do
     gem 'rspec-rails'
     gem 'factory_girl_rails'
     gem 'rateaux'
+    gem 'byebug'
 end
 
 group :test do
-  gem 'byebug'
   #gem 'faker'
   #gem 'capybara'
   #gem 'guard-rspec'
