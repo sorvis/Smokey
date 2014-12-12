@@ -1,5 +1,20 @@
 require 'rails_helper'
-#require 'ruby-debug'
+
+describe 'Given TemperatureReadings with a parent device' do
+  before(:each) do
+    @device = Device.create
+    @reading = @device.temperatureReadings.create :CelciusReading => 2
+  end
+
+  it 'should have the same device_id as the parent device record' do
+    expect(@reading.device_id).to eq @device.id
+  end
+
+  it 'should be deleted when the device is deleted' do
+    expect { @device.destroy }.
+      to change(TemperatureReading, :count).by(-1)
+  end
+end
 
 describe 'Given a temperature of 38.2 celcius' do
   before(:each) do

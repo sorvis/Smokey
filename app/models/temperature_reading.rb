@@ -1,4 +1,5 @@
 class TemperatureReading < ActiveRecord::Base
+  belongs_to :device
   validates :CelciusReading, presence: true
 
   def fahrenheit
