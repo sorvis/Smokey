@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :devices
+
   get 'summary/index'
   get 'summary/data'
   get 'summary/latest'
