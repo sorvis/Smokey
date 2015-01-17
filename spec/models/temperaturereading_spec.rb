@@ -12,6 +12,19 @@ describe 'Given an external_device' do
   end
 end
 
+describe 'Given a reading without a existing parent device' do
+  before(:each) do
+    @external_id = 'not existing'
+    device = Device.find_by :external_id => @external_id
+    device.destroy if device
+  end
+  it 'should create a device' do
+    expect{ TemperatureReading.create :CelciusReading => 4,
+      :external_device_id => @external_id
+    }.to change {Device.find_by external_id: @external_id}.from(NilClass).to(Device)
+  end
+end
+
 describe 'Given TemperatureReadings with a parent device' do
   before(:each) do
     @device = Device.create
