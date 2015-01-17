@@ -6,7 +6,7 @@ RSpec.describe TemperatureReadingsController, :type => :controller do
     before(:each) do
       @params = ActionController::Parameters.new({
         CelciusReading: '2',
-        external_device: 'dev 03'
+        external_device_id: 'dev 03'
       })
     end
 

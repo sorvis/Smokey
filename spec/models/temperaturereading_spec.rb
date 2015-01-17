@@ -1,5 +1,17 @@
 require 'rails_helper'
 
+describe 'Given an external_device' do
+  before(:each) do
+    @device = Device.create :external_id => 'test'
+  end
+
+  it 'should create a reading on that device' do
+    expect{reading = TemperatureReading.create :CelciusReading => 3, 
+            :external_device_id => @device.external_id
+    }.to change(@device.temperatureReadings, :count).by(1)
+  end
+end
+
 describe 'Given TemperatureReadings with a parent device' do
   before(:each) do
     @device = Device.create
