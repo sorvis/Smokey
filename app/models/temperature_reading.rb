@@ -6,6 +6,11 @@ class TemperatureReading < ActiveRecord::Base
     self.device = Device.find_or_create_by external_id: id
   end
 
+  def external_device_id
+    return nil unless self.device
+    self.device.external_id
+  end
+
   def fahrenheit
     return nil if self.CelciusReading.nil?
     TemperatureReading.toFahrenheit(self.CelciusReading)

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe TemperatureReadingsController, :type => :controller do
 
-  describe 'Given a parameter hash with a device' do
+  describe 'Given a parameter hash with a uknown device' do
     before(:each) do
       @params = ActionController::Parameters.new({
         CelciusReading: '2',
@@ -14,6 +14,12 @@ RSpec.describe TemperatureReadingsController, :type => :controller do
       expect {
         post :create, temperature_reading: @params
       }.to change(TemperatureReading, :count).by(1)
+    end
+
+    it 'to add a new device' do
+      expect {
+        post :create, temperature_reading: @params
+      }.to change(Device, :count).by(1)
     end
   end
 
