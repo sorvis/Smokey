@@ -70,6 +70,6 @@ class TemperatureReadingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def temperature_reading_params
-      params.require(:temperature_reading).permit(:CelciusReading)
+      params.require(:temperature_reading).permit(:CelciusReading, :external_device)
     end
 end

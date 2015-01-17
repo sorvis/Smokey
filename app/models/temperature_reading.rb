@@ -2,6 +2,9 @@ class TemperatureReading < ActiveRecord::Base
   belongs_to :device
   validates :CelciusReading, presence: true
 
+  def external_device=(id)
+  end
+
   def fahrenheit
     return nil if self.CelciusReading.nil?
     TemperatureReading.toFahrenheit(self.CelciusReading)
