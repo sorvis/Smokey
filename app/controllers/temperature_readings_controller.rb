@@ -1,5 +1,6 @@
 class TemperatureReadingsController < ApplicationController
   before_action :set_temperature_reading, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :create]
   protect_from_forgery :except => [:create]
 
   # GET /temperature_readings
