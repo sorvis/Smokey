@@ -160,7 +160,7 @@ describe 'Given data before today and today archive' do
   end
 
   it 'should archive yesterdays data into 24 records' do
-    25.times{|i| TemperatureReading.create :created_at => DateTime.yesterday.beginning_of_day + (i-1).hour, :CelciusReading => Random.rand()}
+    50.times{|i| TemperatureReading.create :created_at => DateTime.yesterday.beginning_of_day + ((i-1)%24).hour, :CelciusReading => Random.rand()}
     TemperatureReading.archive!
     TemperatureReading.where(created_at: (DateTime.yesterday.
                                           beginning_of_day)..DateTime.
