@@ -58,6 +58,11 @@ class TemperatureReading < ActiveRecord::Base
     TemperatureReading.destroy(not_archived.pluck :id)
   end
 
+  def self.DeleteOlderThenDays(days)
+    oldItems = TemperatureReading.where.not(:created_at => ((Date.today - days).beginning_of_day..Date.today.end_of_day)) 
+    TemperatureReading.destroy(oldItems.pluck :id)
+  end
+
   def self.all_today
     TemperatureReading.where(:created_at => (Date.today.beginning_of_day..Date.today.end_of_day))
   end

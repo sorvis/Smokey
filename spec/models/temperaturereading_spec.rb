@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'date'
 
 describe 'Given an external_device' do
   before(:each) do
@@ -168,4 +169,24 @@ describe 'Given data before today and today archive' do
   end
 end
 
+describe 'Given DeleteOlderThenDays is ran' do
+  before(:each) do
+    TemperatureReading.delete_all
+  end
 
+  it 'should leave reading from 3 days ago intact when triming for 4 days' do
+    @record = TemperatureReading.create! :created_at => Date.today.to_date - 3, :CelciusReading => Random.rand()
+    expect{ TemperatureReading.DeleteOlderThenDays(4) }.not_to change {TemperatureReading.exists?(@record)}
+  end
+
+  it 'should leave reading from 4 days ago intact when triming for 4 days' do
+    @record = TemperatureReading.create! :created_at => Date.today.to_date - 4, :CelciusReading => Random.rand()
+    expect{ TemperatureReading.DeleteOlderThenDays(4) }.not_to change {TemperatureReading.exists?(@record)}
+  end
+
+  it 'should delete reading from 5 days ago when triming for 4 days' do
+    @record = TemperatureReading.create! :created_at => Date.today.to_date - 5, :CelciusReading => Random.rand()
+    expect{ TemperatureReading.DeleteOlderThenDays(4) }.to change {TemperatureReading.exists?(@record)}
+  end
+
+end
